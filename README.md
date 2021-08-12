@@ -1,2 +1,2 @@
 # ReSaver
-Simple console file saver from choosen directory
+Simple python console file saver from choosen directory
