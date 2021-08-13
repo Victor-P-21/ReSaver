@@ -2,6 +2,7 @@
 from os import listdir, mkdir, path
 from shutil import copy, rmtree
 from time import sleep, strftime
+from winsound import Beep
 #---Global---
 
 #---Func---
@@ -14,7 +15,7 @@ configFile = 'ReSaverConfig.txt'
     # Failsafe for config file
 if listdir(path=rootDir).count(configFile) < 1:
     file = open(configFile, 'w')
-    file.write('.\\Saves\\\n600\n10\n\nAdd source folder, delay (in seconds) between loops and copy count in this file')
+    file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\nsource folder,\ndelay (in seconds) between loops,\ncopy count,\nsound feedback in this file')
     file.close()
     print('Add config first')
     exit()
@@ -23,6 +24,7 @@ else:
     copyFrom = file.readline()[:-1] # Cutting out last symbol in line (\n)
     delayInSec = int(file.readline()[:-1])
     copyCount = int(file.readline()[:-1])
+    isSilent = int(file.readline()[:-1])
     file.close()
     
     # Failsafe for source
@@ -52,6 +54,13 @@ while True:
             counter += 1
             
     print('From ' + copyFrom + ' to ' + bcFolder + path.sep + nFolder + ' copied ' + str(counter) + ' file(s).\nPress Ctrl+C to exit\n')
+    if isSilent > 0:
+        try:    # Beep feedback
+            Beep(200, 100)
+            Beep(250, 100)
+        except RuntimeError:
+            print('Beep allowed only on Win systems, please disable it')
+            
     try:    # Just for clearer stops
         sleep(delayInSec)
     except KeyboardInterrupt:
