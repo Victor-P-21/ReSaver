@@ -19,11 +19,11 @@ if listdir(path=rootDir).count(configFile) < 1:
     file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\nsource folder,\ndelay (in seconds) between loops,\ncopy count,\nsound feedback in this file')
     file.close()
     print('Add config first')
-    input('\nPress enter to close application')
+    input('\nPress Enter to close application')
     exit()
 else:
     file = open(configFile, 'r')
-    copyFrom = file.readline()[:-1] # Cutting out last symbol in line (\n)
+    copyFrom = file.readline()[:-1] # Cutting out last symbol from line (\n)
     delayInSec = int(file.readline()[:-1])
     copyCount = int(file.readline()[:-1])
     isSilent = int(file.readline()[:-1])
@@ -32,7 +32,7 @@ else:
     # Failsafe for source
 if path.isdir(copyFrom) != True:
     print('Error in source file! Incorrect route')
-    input('\nPress enter to close application')
+    input('\nPress Enter to close application')
     exit()
     
     # Failsafe for backups dir
@@ -69,8 +69,8 @@ while True:
         sleep(delayInSec)
     except KeyboardInterrupt:
         print('ReSaver stopped')
-        input('\nPress enter to close application')
+        input('\nPress Enter to close application')
         exit()
+        
 #---Extra---
 # pyinstaller --onefile ReSaver.py
-#
