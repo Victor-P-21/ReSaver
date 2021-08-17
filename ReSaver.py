@@ -14,7 +14,7 @@ bcFolder = 'Backups'
 configFile = 'ReSaverConfig.txt'
 
     # Failsafe for config file
-if listdir(path=rootDir).count(configFile) < 1:
+if path.exists(configFile) != True:
     file = open(configFile, 'w')
     file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\nsource folder,\ndelay (in seconds) between loops,\ncopy count,\nsound feedback in this file')
     file.close()
