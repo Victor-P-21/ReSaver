@@ -3,6 +3,7 @@ from os import listdir, mkdir, path
 from shutil import copy, rmtree
 from time import sleep, strftime
 from winsound import Beep
+from sys import exit
 #---Global---
 
 #---Func---
@@ -18,6 +19,7 @@ if listdir(path=rootDir).count(configFile) < 1:
     file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\nsource folder,\ndelay (in seconds) between loops,\ncopy count,\nsound feedback in this file')
     file.close()
     print('Add config first')
+    input('\nPress enter to close application')
     exit()
 else:
     file = open(configFile, 'r')
@@ -30,6 +32,7 @@ else:
     # Failsafe for source
 if path.isdir(copyFrom) != True:
     print('Error in source file! Incorrect route')
+    input('\nPress enter to close application')
     exit()
     
     # Failsafe for backups dir
@@ -54,6 +57,7 @@ while True:
             counter += 1
             
     print('From ' + copyFrom + ' to ' + bcFolder + path.sep + nFolder + ' copied ' + str(counter) + ' file(s).\nPress Ctrl+C to exit\n')
+    
     if isSilent > 0:
         try:    # Beep feedback
             Beep(200, 100)
@@ -65,4 +69,8 @@ while True:
         sleep(delayInSec)
     except KeyboardInterrupt:
         print('ReSaver stopped')
+        input('\nPress enter to close application')
         exit()
+#---Extra---
+# pyinstaller --onefile ReSaver.py
+#
