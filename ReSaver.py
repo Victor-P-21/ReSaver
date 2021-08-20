@@ -9,14 +9,13 @@ from sys import exit
 #---Func---
 
 #---Main---
-rootDir = './'
 bcFolder = 'Backups'
 configFile = 'ReSaverConfig.txt'
 
     # Failsafe for config file
 if path.exists(configFile) != True:
     file = open(configFile, 'w')
-    file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\nsource folder,\ndelay (in seconds) between loops,\ncopy count,\nsound feedback in this file')
+    file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\n-source folder,\n-delay (in seconds) between loops,\n-copy count,\n-sound feedback in this file')
     file.close()
     print('Add config first')
     input('\nPress Enter to close application')
@@ -36,7 +35,7 @@ if path.isdir(copyFrom) != True:
     exit()
     
     # Failsafe for backups dir
-if listdir(path=rootDir).count(bcFolder) < 1:
+if path.exists(bcFolder) != True:
     mkdir(bcFolder)
     
 # Backups creation block
