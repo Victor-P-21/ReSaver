@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #---Imports---
 from os import listdir, mkdir, path
 from shutil import copy, rmtree
