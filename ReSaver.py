@@ -6,24 +6,22 @@ from time import sleep, strftime
 from winsound import Beep
 from sys import exit
 #---Global---
-
+bcFolder = 'Backups'
+configFile = 'ReSaverConfig.txt'
 #---Func---
 
 #---Main---
-bcFolder = 'Backups'
-configFile = 'ReSaverConfig.txt'
-
     # Failsafe for config file
 if path.exists(configFile) != True:
     file = open(configFile, 'w')
     file.write('.\\Saves\\\n600\n10\n1\n\nAdd here:\n-source folder,\n-delay (in seconds) between loops,\n-copy count,\n-sound feedback in this file')
     file.close()
-    print('Add config first')
+    print('Add configuration to app')
     input('\nPress Enter to close application')
     exit()
-else:
+else: # if exists load data
     file = open(configFile, 'r')
-    copyFrom = file.readline()[:-1] # Cutting out last symbol from line (\n)
+    copyFrom = file.readline()[:-1]
     delayInSec = int(file.readline()[:-1])
     copyCount = int(file.readline()[:-1])
     isSilent = int(file.readline()[:-1])
@@ -31,7 +29,7 @@ else:
     
     # Failsafe for source
 if path.isdir(copyFrom) != True:
-    print('Error in source file! Incorrect route')
+    print('Error in config file! Incorrect route')
     input('\nPress Enter to close application')
     exit()
     
@@ -46,24 +44,24 @@ while True:
         rmtree(bcFolder + path.sep + listdir(path=bcFolder + path.sep)[0])
         
     # Timestamp folder creation
-    nFolder = strftime("%d.%m.%Y %H-%M-%S")
-    mkdir(bcFolder + path.sep + nFolder)
+    newFolder = strftime("%d.%m.%Y %H-%M-%S")
+    mkdir(bcFolder + path.sep + newFolder)
     
     # Backups creation
     counter = 0
     for x in listdir(path = copyFrom):
         if path.isfile(copyFrom + path.sep + x) == True: # Failsafe for folders
-            copy(copyFrom + path.sep + x, bcFolder + path.sep + nFolder)
+            copy(copyFrom + path.sep + x, bcFolder + path.sep + newFolder)
             counter += 1
             
-    print('From ' + copyFrom + ' to ' + bcFolder + path.sep + nFolder + ' copied ' + str(counter) + ' file(s).\nPress Ctrl+C to exit\n')
+    print('From ' + copyFrom + ' to ' + bcFolder + path.sep + newFolder + ' copied ' + str(counter) + ' file(s).\nPress Ctrl+C to exit\n')
     
     if isSilent > 0:
         try:    # Beep feedback
             Beep(200, 100)
             Beep(250, 100)
         except RuntimeError:
-            print('Beep allowed only on Win systems, please disable it')
+            print('Beep allowed only on Windows systems, please disable it in config file')
             
     try:    # Just for clearer stops
         sleep(delayInSec)
